@@ -64,18 +64,15 @@ jobs:
       - name: Upload JUnit results to Xray Cloud
         if: always()
         run: |
-          echo "Creating info.json..."
-          echo '{
-            "fields": {
-              "project": { "key": "TA" },
-              "summary": "Playwright Automated Execution",
-              "issuetype": { "name": "Test Execution" }
-             }
-          }' > info.json
-
           echo "Uploading JUnit results to Xray..."
-          curl \
+          
+          curl -s -X POST "https://xray.cloud.getxray.app/api/v2/import/execution/junit" \
             -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
             -F "file=@test-results/results.xml" \
-            -F "info=@info.json;type=application/json" \
-             https://xray.cloud.getxray.app/api/v2/import/execution/junit
+            -F 'info={
+              "fields": {
+                "project": {"key": "TA"},
+                "summary": "Playwright Automated Execution",
+                "issuetype": {"name": "Test Execution"}
+              }
+             };type=application/json'
