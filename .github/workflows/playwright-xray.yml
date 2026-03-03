@@ -42,4 +42,4 @@ jobs:
       run: |
         curl -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
              -F "file=@test-results/results.xml" \
-             "https://eu.xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=TA"
+             "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=TA"
