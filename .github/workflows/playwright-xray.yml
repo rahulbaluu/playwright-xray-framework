@@ -67,6 +67,5 @@ jobs:
           echo "Uploading JUnit results to Xray..."
           curl -X POST \
               -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-              -H "Content-Type: multipart/form-data" \
               -F "file=@test-results/results.xml" \
               "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=XSP"
