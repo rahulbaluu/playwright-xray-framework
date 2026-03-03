@@ -1,9 +1,13 @@
+
+
 // tests/login/login.spec.ts
 import { test, expect } from '@playwright/test';
 
 // TA-1: Verify successful login
 test('Verify Login Successful', async ({ page }) => {
     test.info().annotations.push({type: 'test_key', description: 'TA-1'});
+    test.info().annotations.push({type: 'test_summary', description: 'Verify Login Successful'});
+    test.info().annotations.push({type: 'test_description', description: 'Verify Login Successful. When the enter the correct username and the username password.'});
   // Navigate to the signup/login page
   await page.goto('https://www.automationexercise.com/signup');
 
