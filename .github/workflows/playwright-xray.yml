@@ -30,7 +30,7 @@ jobs:
 
       #Run Playwright tests with JUnit reporter
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --reporter=junit --output=test-results
 
       #Verify JUnit resukts exist
     - name: Check JUnit results
@@ -51,6 +51,8 @@ jobs:
     - name: Upload Junit results to Xray Cloud
       if: always()
       run: |
+        for file in test-results/*.xml; do
+        echo "Uploading $file ..."
         curl -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-             -F "file=@test-results/results.xml" \
+             -F "file=@$file" \
              "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=TA"
