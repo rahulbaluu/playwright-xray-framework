@@ -35,8 +35,8 @@ jobs:
             -H "Content-Type: application/json" \
             -d "{\"client_id\": \"${{secrets.XRAY_CLIENT_ID}}\", \"client_secret\": \"${{secrets.XRAY_CLIENT_SECRET}}\"}" \
             https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
-          echo "token=$Token" >> $GITHUB_OUTPUT
-          
+          echo "token=$TOKEN" >> $GITHUB_OUTPUT
+
     - name: Upload Junit results to Xray Cloud
       run: |
         curl -X POST \
