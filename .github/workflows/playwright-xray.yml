@@ -65,7 +65,7 @@ jobs:
         if: always()
         run: |
             echo "Uploading JUnit results to Xray..."
-            curl \
+            curl -v \
               -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
               -F "file=@test-results/results.xml" \
               -F "info={\"fields\":{\"project\":{\"key\":\"TA\"},\"summary\":\"Playwright Automated Execution\",\"issuetype\":{\"name\":\"Test Execution\"}}};type=application/json" \
