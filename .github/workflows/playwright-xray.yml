@@ -64,8 +64,10 @@ jobs:
       - name: Upload JUnit results to Xray Cloud
         if: always()
         run: |
-          echo "Uploading JUnit results to Xray..."
-          curl \
-              -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-              -F "file=@test-results/results.xml" \
-              "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=XSP"
+            echo "Uploading JUnit results to Xray..."
+
+            curl \
+                -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
+                -F "file=@test-results/results.xml" \
+                -F "info={\"fields\":{\"project\":{\"key\":\"XSP\"},\"summary\":\"Playwright Automated Execution\",\"issuetype\":{\"name\":\"Test Execution\"}}};type=application/json" \
+                https://xray.cloud.getxray.app/api/v2/import/execution/junit
