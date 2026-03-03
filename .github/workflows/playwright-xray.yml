@@ -10,22 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      #Checkout code
     - name: Checkout repository
       uses: actions/checkout@v4
 
+      #Setup Node
     - name: Setup Node
       uses: actions/setup-node@v4 
       with:
         node-version: 18
 
+      #Install dependencies
     - name: Install dependencies
       run: npm ci
 
+      #Install Playwright browsers
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
+      #Run Playwright tests with JUnit reporter
     - name: Run Playwright tests
       run: npx playwright test
+
+      #Verify JUnit resukts exist
+    - name: Check JUnit results
+      run: |
+        ls -la test-results
+        cat test-results/*.xml
 
     - name: Authenticate with Xray Cloud
       id: xray-auth
