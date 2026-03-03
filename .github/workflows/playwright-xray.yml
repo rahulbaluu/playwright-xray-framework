@@ -30,13 +30,13 @@ jobs:
 
       #Run Playwright tests with JUnit reporter
     - name: Run Playwright tests
-      run: npx playwright test --reporter=junit --reporter-options outputFile=test-results/results.xml
+      run: npx playwright test
 
       #Verify JUnit resukts exist
     - name: Check JUnit results
       run: |
         ls -la test-results
-        cat test-results/*.xml
+        cat test-results/results.xml
 
     - name: Authenticate with Xray Cloud
       id: xray-auth
