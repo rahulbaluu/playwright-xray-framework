@@ -37,7 +37,7 @@ jobs:
       - name: Check JUnit XML
         run: |
           ls -la test-results
-          cat test-results/results.xml
+          cat results.xml
 
       # Authenticate with Xray Cloud
       - name: Authenticate with Xray Cloud
@@ -61,9 +61,9 @@ jobs:
             fi
 
             echo "First 20 lines of results.xml:"
-            head -n 20 "${GITHUB_WORKSPACE}/test-results/results.xml"
+            head -n 20 "${GITHUB_WORKSPACE}/results.xml"
 
              echo "Uploading JUnit results to Xray..."
              curl -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-                  -F "file=@test-results/results.xml" \
+                  -F "file=@results.xml" \
                   "https://xray.cloud.getxray.app/api/v2/import/execution/junit?testExecKey=TA-1"
