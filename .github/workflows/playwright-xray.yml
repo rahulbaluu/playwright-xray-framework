@@ -69,5 +69,7 @@ jobs:
             curl \
                 -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
                 -F "file=@test-results/results.xml" \
-                -F "info={\"fields\":{\"project\":{\"key\":\"XSP\"},\"summary\":\"Playwright Automated Execution\",\"issuetype\":{\"name\":\"Test Execution\"}}};type=application/json" \
+                -F "info={\"fields\":{\"project\":{\"key\":\"TA\"},\"summary\":\"Playwright Automated Execution\",\"issuetype\":{\"name\":\"Test Execution\"}}};type=application/json" \
                 https://xray.cloud.getxray.app/api/v2/import/execution/junit
+
+        
