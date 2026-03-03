@@ -29,6 +29,10 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      # Ensure test-results folder exists
+      - name: Prepare test-results folder
+        run: mkdir -p test-results
+
       # Run Playwright tests with JUnit reporter
       - name: Run Playwright tests
         run: npx playwright test
@@ -36,8 +40,14 @@ jobs:
       # Verify JUnit XML exists
       - name: Check JUnit XML
         run: |
+          echo "Listing test-results folder:"
           ls -la test-results
-          cat test-results/results.xml
+          if [ ! -f "test-results/results.xml" ]; then
+            echo " results.xml not found! Did you configure Playwright reporter correctly?"
+            exit 1
+          fi
+          echo " results.xml found. First 20 lines:"
+          head -n 20 test-results/results.xml
 
       # Authenticate with Xray Cloud
       - name: Authenticate with Xray Cloud
@@ -54,16 +64,7 @@ jobs:
       - name: Upload JUnit results to Xray Cloud
         if: always()
         run: |
-          echo "Verifying test-results/results.xml exists..."
-          if [ ! -f "${GITHUB_WORKSPACE}/test-results/results.xml" ]; then
-            echo "ERROR: results.xml not found!"
-            exit 1
-            fi
-
-            echo "First 20 lines of results.xml:"
-            head -n 20 "${GITHUB_WORKSPACE}/test-results/results.xml"
-
-             echo "Uploading JUnit results to Xray..."
-             curl -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-                  -F "file=@${GITHUB_WORKSPACE}/test-results/results.xml" \
-                  "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=TA"
+          echo "Uploading JUnit results to Xray..."
+          curl -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
+               -F "file=@test-results/results.xml" \
+               "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=TA"
