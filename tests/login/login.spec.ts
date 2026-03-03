@@ -2,7 +2,8 @@
 import { test, expect } from '@playwright/test';
 
 // TA-1: Verify successful login
-test('TA-1 Verify Login Successful', async ({ page }) => {
+test('Verify Login Successful', async ({ page }) => {
+    test.info().annotations.push({type: 'test_key', description: 'TA-1'});
   // Navigate to the signup/login page
   await page.goto('https://www.automationexercise.com/signup');
 
@@ -23,7 +24,8 @@ test('TA-1 Verify Login Successful', async ({ page }) => {
 });
 
 // TA-3: Verify unsuccessful login with wrong password
-test('TA-3 Unsuccessful Login try with wrong password', async ({ page }) => {
+test('Unsuccessful Login try with wrong password', async ({ page }) => {
+    test.info().annotations.push({type: 'test_key', description: 'TA-3'});
   await page.goto('https://www.automationexercise.com/signup');
 
   await page.locator('[data-qa="login-email"]').fill('rahul0987@gmail.com');
